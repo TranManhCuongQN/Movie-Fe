@@ -4,8 +4,13 @@ import App from './App'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import 'react-toastify/dist/ReactToastify.css'
-import { ToastContainer } from 'react-toastify'
+
 import { BrowserRouter } from 'react-router-dom'
+
+import '@fontsource/roboto/300.css'
+import '@fontsource/roboto/400.css'
+import '@fontsource/roboto/500.css'
+import '@fontsource/roboto/700.css'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,7 +25,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <QueryClientProvider client={queryClient}>
       <React.StrictMode>
         <App />
-        <ToastContainer />
       </React.StrictMode>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
