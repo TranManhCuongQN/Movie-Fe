@@ -1,5 +1,5 @@
 import { Favorite } from 'src/types/favorites.type'
-import axiosClient from '../client/axios.client'
+import axiosClient from '../axios.client'
 
 const favoriteEndpoints = {
   list: 'user/favorites',

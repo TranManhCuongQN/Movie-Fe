@@ -1,5 +1,5 @@
 import { User } from 'src/types/user.type'
-import axiosClient from '../client/axios.client'
+import axiosClient from '../axios.client'
 
 const userEndpoints = {
   signin: 'user/signin',

@@ -1,4 +1,3 @@
-import { WidthFull } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { Box, Stack } from '@mui/system'
 import React from 'react'

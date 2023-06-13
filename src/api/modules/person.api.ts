@@ -1,4 +1,4 @@
-import publicClient from '../client/public.client'
+import axiosClient from '../axios.client'
 
 const personEndpoints = {
   detail: (personId: string) => `person/${personId}`,
@@ -7,11 +7,11 @@ const personEndpoints = {
 
 const personApi = {
   detail: async (personId: string) => {
-    const response = await publicClient.get(personEndpoints.detail(personId))
+    const response = await axiosClient.get(personEndpoints.detail(personId))
     return response.data
   },
   medias: async (personId: string) => {
-    const response = await publicClient.get(personEndpoints.medias(personId))
+    const response = await axiosClient.get(personEndpoints.medias(personId))
     return response.data
   }
 }

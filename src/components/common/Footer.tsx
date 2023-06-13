@@ -1,6 +1,5 @@
 import { Button, Paper } from '@mui/material'
 import { Box, Stack } from '@mui/system'
-import React from 'react'
 import { Link } from 'react-router-dom'
 import menuConfigs from 'src/configs/menu.config'
 import Container from './Container'

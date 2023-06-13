@@ -1,4 +1,4 @@
-import axiosClient from '../client/axios.client'
+import axiosClient from '../axios.client'
 
 const mediaEndPoints = {
   list: ({ meidaType, mediaCategory, page }: { meidaType: string; mediaCategory: string; page: number }) =>

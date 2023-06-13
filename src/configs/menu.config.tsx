@@ -10,25 +10,25 @@ const main = [
   {
     display: 'home',
     path: '/',
-    icon: HomeOutlinedIcon,
+    icon: <HomeOutlinedIcon />,
     state: 'home'
   },
   {
     display: 'movies',
     path: '/movies',
-    icon: SlideshowOutlinedIcon,
+    icon: <SlideshowOutlinedIcon />,
     state: 'movies'
   },
   {
     display: 'tv series',
     path: '/tv',
-    icon: LiveTvOutlinedIcon,
-    state: 'hometv'
+    icon: <LiveTvOutlinedIcon />,
+    state: 'tv'
   },
   {
     display: 'search',
     path: '/search',
-    icon: SearchOutlinedIcon,
+    icon: <SearchOutlinedIcon />,
     state: 'search'
   }
 ]
@@ -37,19 +37,19 @@ const user = [
   {
     display: 'favorites',
     path: '/favorites',
-    icon: FavoriteBorderOutlinedIcon,
+    icon: <FavoriteBorderOutlinedIcon />,
     state: 'favorite'
   },
   {
     display: 'reviews',
     path: '/reviews',
-    icon: RateReviewOutlinedIcon,
+    icon: <RateReviewOutlinedIcon />,
     state: 'reviews'
   },
   {
     display: 'password update',
     path: '/password-update',
-    icon: LockResetOutlinedIcon,
+    icon: <LockResetOutlinedIcon />,
     state: 'password-update'
   }
 ]

@@ -1,4 +1,4 @@
-import axiosClient from '../client/axios.client'
+import axiosClient from '../axios.client'
 
 const genreEndpoints = {
   list: (mediaType: string) => `${mediaType}/genres`
