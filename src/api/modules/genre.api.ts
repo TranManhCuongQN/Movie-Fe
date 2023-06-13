@@ -7,7 +7,7 @@ const genreEndpoints = {
 const genreApi = {
   getList: async (mediaType: string) => {
     const response = await axiosClient.get(genreEndpoints.list(mediaType))
-    return response.data
+    return response
   }
 }
 

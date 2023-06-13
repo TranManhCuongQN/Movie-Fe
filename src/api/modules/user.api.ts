@@ -14,18 +14,19 @@ const userApi = {
       username,
       password
     })
+    return response
   },
-  signup: async ({ username, password, confirmPassword, displayName }: User) => {
+  signup: async ({ username, password, displayName }: User) => {
     const response = await axiosClient.post(userEndpoints.signup, {
       username,
       password,
-      confirmPassword,
       displayName
     })
+    return response
   },
   getInfo: async () => {
     const response = await axiosClient.get(userEndpoints.getInfo)
-    return response.data
+    return response
   },
   passwordUpdate: async ({ password, newPassword, confirmNewPassword }: User) => {
     const response = await axiosClient.put(userEndpoints.passwordUpdate, {
@@ -33,6 +34,7 @@ const userApi = {
       newPassword,
       confirmNewPassword
     })
+    return response
   }
 }
 

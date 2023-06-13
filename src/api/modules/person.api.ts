@@ -8,11 +8,11 @@ const personEndpoints = {
 const personApi = {
   detail: async (personId: string) => {
     const response = await axiosClient.get(personEndpoints.detail(personId))
-    return response.data
+    return response
   },
   medias: async (personId: string) => {
     const response = await axiosClient.get(personEndpoints.medias(personId))
-    return response.data
+    return response
   }
 }
 

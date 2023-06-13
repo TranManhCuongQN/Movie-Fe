@@ -28,7 +28,6 @@ const UserMenu = () => {
             PaperProps={{ sx: { padding: 0 } }}
           >
             {menuConfigs.user.map((item, index) => {
-              console.log('item.icon', item.icon)
               return (
                 <ListItemButton component={Link} to={item.path} key={index} onClick={() => setAnchorEl(null)}>
                   <ListItemIcon>{item.icon}</ListItemIcon>

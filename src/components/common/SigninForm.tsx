@@ -45,8 +45,8 @@ const SigninForm = ({ switchAuthState }: SignInFormProps) => {
 
   const signinMutation = useMutation({
     mutationFn: (body: FormData) => userApi.signin(body),
-    onSuccess: (data) => {
-      console.log(data)
+    onSuccess: (res) => {
+      setUser(res.data as User)
       setAuthModal(false)
       toast.dismiss()
       toast.success('Sign in success')
@@ -57,27 +57,31 @@ const SigninForm = ({ switchAuthState }: SignInFormProps) => {
     }
   })
 
-  const onSubmit = handleSubmit(async (data) => {
-    await signinMutation.mutate(data)
+  const onSubmit = handleSubmit((data) => {
+    signinMutation.mutate(data)
   })
 
   return (
     <Box component='form' onSubmit={onSubmit}>
       <Stack spacing={3}>
+        {/* username */}
         <InputField
           type='text'
-          placeholder='username'
+          placeholder='Username'
           name='username'
           fullWidth
           control={control}
           color='success'
           label='Username'
         />
+
+        {/* password */}
         <InputField
           name='password'
           label='Password'
           control={control}
           color='success'
+          placeholder='Password'
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -93,6 +97,8 @@ const SigninForm = ({ switchAuthState }: SignInFormProps) => {
             )
           }}
         />
+
+        {/* button signin */}
         <LoadingButton
           type='submit'
           fullWidth
@@ -117,6 +123,7 @@ const SigninForm = ({ switchAuthState }: SignInFormProps) => {
           sign up
         </Button>
 
+        {/* inform error */}
         {errorMessage && (
           <Box sx={{ marginBox: 2 }}>
             <Alert severity='error' variant='outlined'>

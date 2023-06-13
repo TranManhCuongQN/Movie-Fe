@@ -6,4 +6,5 @@ export interface User {
   confirmPassword?: string
   newPassword?: string
   confirmNewPassword?: string
+  token?: string
 }

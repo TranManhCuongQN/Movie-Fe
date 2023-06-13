@@ -9,9 +9,18 @@ interface Auth {
 }
 
 const useAuthStore = create<Auth>()((set) => ({
-  user: null,
+  user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null,
   listFavorites: [],
-  setUser: (user: User | null) => set({ user })
+  setUser: (user: User | null) => {
+    if (!user) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+    } else {
+      localStorage.setItem('token', user.token as string)
+      localStorage.setItem('user', JSON.stringify(user))
+    }
+    set({ user })
+  }
 }))
 
 export default useAuthStore

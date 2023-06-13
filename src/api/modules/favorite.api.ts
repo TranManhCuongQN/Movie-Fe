@@ -16,15 +16,15 @@ const favoriteApi = {
       mediaTitle,
       mediaType
     })
-    return response.data
+    return response
   },
   getList: async () => {
     const response = await axiosClient.get(favoriteEndpoints.list)
-    return response.data
+    return response
   },
   remove: async (favoriteId: string) => {
     const response = await axiosClient.delete(favoriteEndpoints.remove(favoriteId))
-    return response.data
+    return response
   }
 }
 

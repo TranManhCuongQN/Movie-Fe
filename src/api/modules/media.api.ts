@@ -11,15 +11,15 @@ const mediaEndPoints = {
 const mediaApi = {
   detail: async ({ mediaType, mediaId }: { mediaType: string; mediaId: string }) => {
     const response = await axiosClient.get(mediaEndPoints.detail({ mediaType, mediaId }))
-    return response.data
+    return response
   },
   list: async ({ meidaType, mediaCategory, page }: { meidaType: string; mediaCategory: string; page: number }) => {
     const response = await axiosClient.get(mediaEndPoints.list({ meidaType, mediaCategory, page }))
-    return response.data
+    return response
   },
   search: async ({ mediaType, query, page }: { mediaType: string; query: string; page: number }) => {
     const response = await axiosClient.get(mediaEndPoints.search({ mediaType, query, page }))
-    return response.data
+    return response
   }
 }
 

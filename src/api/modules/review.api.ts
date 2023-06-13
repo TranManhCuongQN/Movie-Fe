@@ -16,15 +16,15 @@ const reviewApi = {
       mediaPoster,
       mediaTitle
     })
-    return response.data
+    return response
   },
   list: async () => {
     const response = await axiosClient.get(reviewEndpoints.list)
-    return response.data
+    return response
   },
   remove: async (reviewId: string) => {
     const response = await axiosClient.delete(reviewEndpoints.remove(reviewId))
-    return response.data
+    return response
   }
 }
 export default reviewApi
