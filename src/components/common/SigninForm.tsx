@@ -13,7 +13,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 
 import InputField from './InputField'
-import { Button, IconButton, InputAdornment } from '@mui/material'
+import { Alert, Button, IconButton, InputAdornment } from '@mui/material'
 
 interface SignInFormProps {
   switchAuthState: () => void
@@ -27,6 +27,7 @@ interface FormData {
 const SigninForm = ({ switchAuthState }: SignInFormProps) => {
   const setUser = useAuthStore((state) => state.setUser)
   const setAuthModal = useAuthModalStore((state) => state.setAuthModalOpen)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [showPassword, setShowPassword] = React.useState(false)
 
   const schema = yup.object({
@@ -52,15 +53,14 @@ const SigninForm = ({ switchAuthState }: SignInFormProps) => {
       reset()
     },
     onError: (error: any) => {
-      console.log(error)
-      toast.dismiss()
-      toast.error(error.message)
+      setErrorMessage(error.message)
     }
   })
 
   const onSubmit = handleSubmit(async (data) => {
     await signinMutation.mutate(data)
   })
+
   return (
     <Box component='form' onSubmit={onSubmit}>
       <Stack spacing={3}>
@@ -116,6 +116,14 @@ const SigninForm = ({ switchAuthState }: SignInFormProps) => {
         >
           sign up
         </Button>
+
+        {errorMessage && (
+          <Box sx={{ marginBox: 2 }}>
+            <Alert severity='error' variant='outlined'>
+              {errorMessage}
+            </Alert>
+          </Box>
+        )}
       </Stack>
     </Box>
   )
