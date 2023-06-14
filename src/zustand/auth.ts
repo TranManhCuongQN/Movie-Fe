@@ -6,6 +6,9 @@ interface Auth {
   user: User | null
   listFavorites: Favorite[]
   setUser: (user: User | null) => void
+  setListFavorites: (listFavorites: Favorite[]) => void
+  addFavorite: (favorite: Favorite) => void
+  removeFavorite: (favorite: Favorite) => void
 }
 
 const useAuthStore = create<Auth>()((set) => ({
@@ -20,7 +23,11 @@ const useAuthStore = create<Auth>()((set) => ({
       localStorage.setItem('user', JSON.stringify(user))
     }
     set({ user })
-  }
+  },
+  setListFavorites: (listFavorites: Favorite[]) => set({ listFavorites }),
+  addFavorite: (favorite: Favorite) => set((state) => ({ listFavorites: [...state.listFavorites, favorite] })),
+  removeFavorite: (favorite: Favorite) =>
+    set((state) => ({ listFavorites: state.listFavorites.filter((f: Favorite) => f.mediaId !== favorite.mediaId) }))
 }))
 
 export default useAuthStore

@@ -36,7 +36,8 @@ const AuthModal = () => {
           width: '100%',
           maxWidth: '600px',
           padding: 4,
-          outline: 'none'
+          outline: 'none',
+          zIndex: 9999
         }}
       >
         <Box sx={{ padding: 4, boxShadow: 24, backgroundColor: 'background.paper' }}>

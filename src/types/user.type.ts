@@ -2,9 +2,8 @@ export interface User {
   username: string
   displayName?: string
   password: string
-  salt?: string
-  confirmPassword?: string
+  token?: string
+  id?: string
   newPassword?: string
   confirmNewPassword?: string
-  token?: string
 }

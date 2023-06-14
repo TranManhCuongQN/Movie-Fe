@@ -1,4 +1,5 @@
-import { CssBaseline, ThemeProvider } from '@mui/material'
+/* eslint-disable import/no-unresolved */
+import { CssBaseline, PaletteMode, ThemeProvider } from '@mui/material'
 import { Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import PageWrapper from './components/common/PageWrapper'
@@ -7,11 +8,16 @@ import themeConfigs from './configs/theme.config'
 import routes from './routes/routes'
 import useThemeModeStore from './zustand/themeMode'
 
+import 'react-toastify/dist/ReactToastify.css'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+
 function App() {
   const themeMode = useThemeModeStore((state) => state.themeMode)
 
   return (
-    <ThemeProvider theme={themeConfigs.custom({ mode: themeMode })}>
+    <ThemeProvider theme={themeConfigs.custom({ mode: themeMode as PaletteMode })}>
       {/* config toastify */}
       <ToastContainer
         position='bottom-left'
@@ -21,7 +27,7 @@ function App() {
         closeOnClick
         pauseOnHover
         pauseOnFocusLoss
-        theme={themeMode}
+        theme={themeMode as PaletteMode}
       />
 
       {/* mui reset css */}

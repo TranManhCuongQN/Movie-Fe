@@ -16,7 +16,7 @@ const uiConfigs = {
         backgroundImage: 'linear-gradient(to right, rgba(245,245,245,1), rgba(0,0,0,0))'
       }
     },
-    typoLines: (lines: number, textAlign: string) => ({
+    typoLines: (lines: number, textAlign?: string) => ({
       textAlign: textAlign || 'justify',
       display: '-webkit-box',
       overflow: 'hidden',

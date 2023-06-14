@@ -1,8 +1,8 @@
 import axiosClient from '../axios.client'
 
 const mediaEndPoints = {
-  list: ({ meidaType, mediaCategory, page }: { meidaType: string; mediaCategory: string; page: number }) =>
-    `${meidaType}/${mediaCategory}?page=${page}`,
+  list: ({ mediaType, mediaCategory, page }: { mediaType: string; mediaCategory: string; page: number }) =>
+    `${mediaType}/${mediaCategory}?page=${page}`,
   detail: ({ mediaType, mediaId }: { mediaType: string; mediaId: string }) => `${mediaType}/${mediaId}`,
   search: ({ mediaType, query, page }: { mediaType: string; query: string; page: number }) =>
     `${mediaType}/search/?query=${query}&page=${page}`
@@ -13,8 +13,8 @@ const mediaApi = {
     const response = await axiosClient.get(mediaEndPoints.detail({ mediaType, mediaId }))
     return response
   },
-  list: async ({ meidaType, mediaCategory, page }: { meidaType: string; mediaCategory: string; page: number }) => {
-    const response = await axiosClient.get(mediaEndPoints.list({ meidaType, mediaCategory, page }))
+  list: async ({ mediaType, mediaCategory, page }: { mediaType: string; mediaCategory: string; page: number }) => {
+    const response = await axiosClient.get(mediaEndPoints.list({ mediaType, mediaCategory, page }))
     return response
   },
   search: async ({ mediaType, query, page }: { mediaType: string; query: string; page: number }) => {
