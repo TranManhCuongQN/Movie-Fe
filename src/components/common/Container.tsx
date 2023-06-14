@@ -2,7 +2,7 @@ import { Typography } from '@mui/material'
 import { Box, Stack } from '@mui/system'
 import React from 'react'
 
-const Container = ({ header, children }: { header?: string; children: React.ReactElement }) => {
+const Container = ({ header, children }: { header?: string; children: React.ReactElement | React.ReactNode }) => {
   return (
     <>
       <Box

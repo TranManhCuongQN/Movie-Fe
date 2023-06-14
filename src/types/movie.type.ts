@@ -1,16 +1,14 @@
+import { Review } from './review.type'
+
 export interface movie {
-  adult: boolean
   backdrop_path: string
-  genre_ids: number[]
   id: number
   original_language: string
   original_title: string
   overview: string
-  popularity: number
   poster_path: string
   release_date: string
   title: string
-  video: false
   vote_average: number
   vote_count: number
   name: string
@@ -19,6 +17,14 @@ export interface movie {
   profile_path: string
   first_air_date: string
   mediaRate: number
+  images: {
+    backdrops: {
+      file_path: string
+    }[]
+    posters: {
+      file_path: string
+    }[]
+  }
   credits: {
     cast: {
       id: string
@@ -26,4 +32,13 @@ export interface movie {
       profile_path: string
     }[]
   }
+  videos: {
+    results: {
+      key: string
+      id: string
+    }[]
+  }
+  reviews: Review[]
+  recommend: movie[]
+  genre_ids: number[]
 }

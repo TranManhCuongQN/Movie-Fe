@@ -32,12 +32,12 @@ const HeroSlide = ({ mediaCategory, mediaType }: HeroSlideProps) => {
     queryFn: () => mediaApi.list({ mediaType, mediaCategory, page: 1 }),
 
     onSuccess: (res) => {
-      console.log('media:', res.data.results)
+      // console.log('media:', res.data.results)
       setMovies(res.data.results)
       setGlobalLoading(false)
     },
     onError: (err: any) => {
-      console.log('errorMedias:', err)
+      // console.log('errorMedias:', err)
       toast.dismiss()
       toast.error(err.message)
       setGlobalLoading(false)
@@ -49,10 +49,10 @@ const HeroSlide = ({ mediaCategory, mediaType }: HeroSlideProps) => {
     queryFn: () => genreApi.getList(mediaType),
     onSuccess: (res) => {
       setGenres(res.data.genres)
-      console.log('genres:', res.data.genres)
+      // console.log('genres:', res.data.genres)
     },
     onError: (err: any) => {
-      console.log('errorGenres:', err)
+      // console.log('errorGenres:', err)
       toast.dismiss()
       toast.error(err.message)
     }

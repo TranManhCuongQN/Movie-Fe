@@ -6,7 +6,11 @@ const PageWrapper = ({ children, state }: { children: React.ReactElement; state:
   const setAppState = useAppStateStore((state) => state.setAppState)
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
     setAppState(state)
   }, [appState, setAppState, state])
 

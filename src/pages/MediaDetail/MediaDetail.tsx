@@ -11,10 +11,16 @@ import { toast } from 'react-toastify'
 import tmdbConfigs from 'src/api/configs/tmdb.configs'
 import favoriteApi from 'src/api/modules/favorite.api'
 import mediaApi from 'src/api/modules/media.api'
+import BackdropSlide from 'src/components/common/BackdropSlide'
 import CastSlide from 'src/components/common/CastSlide'
 import CircularRate from 'src/components/common/CircularRate'
 import Container from 'src/components/common/Container'
 import ImageHeader from 'src/components/common/ImageHeader'
+import MediaReview from 'src/components/common/MediaReview'
+import MediaSlide from 'src/components/common/MediaSlide'
+import MediaVideosSlide from 'src/components/common/MediaVideoSlide'
+import PosterSlide from 'src/components/common/PosterSlide'
+import RecommendSlide from 'src/components/common/RecommendSlide'
 import uiConfigs from 'src/configs/ui.config'
 import { Favorite } from 'src/types/favorites.type'
 import { genre } from 'src/types/genres.type'
@@ -37,10 +43,10 @@ const MediaDetail = () => {
   const [onRequest, setOnRequest] = useState<boolean>(false)
   const [genres, setGenres] = useState<genre[]>([])
 
-  const videoRef = useRef<HTMLElement | null>(null)
+  const videoRef = useRef<HTMLDivElement | null>(null)
   const favorite = listFavorites.find((e) => e.mediaId.toString() === (mediaId as string)?.toString())
 
-  const { data: dataMediaDetail, isLoading: isLoadingMediaDetail } = useQuery({
+  const { isLoading: isLoadingMediaDetail } = useQuery({
     queryKey: ['getMediaDetail', { mediaType, mediaId }],
     queryFn: () => mediaApi.detail({ mediaId, mediaType }),
     onSuccess: (res) => {
@@ -58,7 +64,11 @@ const MediaDetail = () => {
   })
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
     if (isLoadingMediaDetail) {
       setGlobalLoading(true)
     }
@@ -229,7 +239,12 @@ const MediaDetail = () => {
                     sx={{ width: 'max-content' }}
                     size='large'
                     startIcon={<PlayArrowIcon />}
-                    onClick={() => (videoRef?.current as HTMLVideoElement).scrollIntoView()}
+                    onClick={() =>
+                      (videoRef?.current as HTMLDivElement).scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                      })
+                    }
                   >
                     watch now
                   </Button>
@@ -249,40 +264,40 @@ const MediaDetail = () => {
         {/* media content */}
 
         {/* media videos */}
-        {/* <div ref={videoRef} style={{ paddingTop: '2rem' }}>
+        <div ref={videoRef} style={{ paddingTop: '2rem' }}>
           <Container header='Videos'>
-            <MediaVideosSlide videos={[...media.videos.results].splice(0, 5)} />
+            <MediaVideosSlide videos={[...media.videos.results]} />
           </Container>
-        </div> */}
+        </div>
         {/* media videos */}
 
         {/* media backdrop */}
-        {/* {media.images.backdrops.length > 0 && (
+        {media.images.backdrops.length > 0 && (
           <Container header='backdrops'>
             <BackdropSlide backdrops={media.images.backdrops} />
           </Container>
-        )} */}
+        )}
         {/* media backdrop */}
 
         {/* media posters */}
-        {/* {media.images.posters.length > 0 && (
+        {media.images.posters.length > 0 && (
           <Container header='posters'>
             <PosterSlide posters={media.images.posters} />
           </Container>
-        )} */}
+        )}
         {/* media posters */}
 
         {/* media reviews */}
-        {/* <MediaReview reviews={media.reviews} media={media} mediaType={mediaType} /> */}
+        <MediaReview reviews={media.reviews} media={media} mediaType={mediaType as string} />
         {/* media reviews */}
 
         {/* media recommendation */}
-        {/* <Container header='you may also like'>
-          {media.recommend.length > 0 && <RecommendSlide medias={media.recommend} mediaType={mediaType} />}
+        <Container header='you may also like'>
+          {media.recommend.length > 0 && <RecommendSlide medias={media.recommend} mediaType={mediaType as string} />}
           {media.recommend.length === 0 && (
-            <MediaSlide mediaType={mediaType} mediaCategory={tmdbConfigs.mediaCategory.top_rated} />
+            <MediaSlide mediaType={mediaType as string} mediaCategory={tmdbConfigs.mediaCategory.top_rated} />
           )}
-        </Container> */}
+        </Container>
         {/* media recommendation */}
       </Box>
     </>

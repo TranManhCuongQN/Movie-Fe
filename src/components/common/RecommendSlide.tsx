@@ -1,0 +1,18 @@
+import { movie } from 'src/types/movie.type'
+import { SwiperSlide } from 'swiper/react'
+import AutoSwiper from './AutoSwiper'
+import MediaItem from './MediaItem'
+
+const RecommendSlide = ({ medias, mediaType }: { medias: movie[]; mediaType: string }) => {
+  return (
+    <AutoSwiper>
+      {medias.map((media, index) => (
+        <SwiperSlide key={index}>
+          <MediaItem media={media} mediaType={mediaType} />
+        </SwiperSlide>
+      ))}
+    </AutoSwiper>
+  )
+}
+
+export default RecommendSlide
