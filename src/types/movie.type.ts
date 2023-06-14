@@ -19,4 +19,11 @@ export interface movie {
   profile_path: string
   first_air_date: string
   mediaRate: number
+  credits: {
+    cast: {
+      id: string
+      name: string
+      profile_path: string
+    }[]
+  }
 }

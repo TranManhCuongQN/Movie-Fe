@@ -16,7 +16,7 @@ const MainLayout = () => {
     queryKey: ['favorite'],
     queryFn: () => favoriteApi.getList(),
     onSuccess: (res) => {
-      console.log(res.data)
+      // console.log(res.data)
       setFavorite(res.data)
     },
     enabled: Boolean(user?.id) && Boolean(user?.token)

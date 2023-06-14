@@ -26,8 +26,10 @@ const useAuthStore = create<Auth>()((set) => ({
   },
   setListFavorites: (listFavorites: Favorite[]) => set({ listFavorites }),
   addFavorite: (favorite: Favorite) => set((state) => ({ listFavorites: [...state.listFavorites, favorite] })),
-  removeFavorite: (favorite: Favorite) =>
-    set((state) => ({ listFavorites: state.listFavorites.filter((f: Favorite) => f.mediaId !== favorite.mediaId) }))
+  removeFavorite: (favorite: Favorite) => {
+    console.log('favoriteId', favorite)
+    set((state) => ({ listFavorites: state.listFavorites.filter((fav) => fav.mediaId !== favorite.mediaId) }))
+  }
 }))
 
 export default useAuthStore

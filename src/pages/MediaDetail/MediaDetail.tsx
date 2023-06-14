@@ -5,100 +5,135 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import { LoadingButton } from '@mui/lab'
 import { Box, Button, Chip, Divider, Stack, Typography } from '@mui/material'
 import { useEffect, useState, useRef } from 'react'
+import { useMutation, useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import tmdbConfigs from 'src/api/configs/tmdb.configs'
+import favoriteApi from 'src/api/modules/favorite.api'
+import mediaApi from 'src/api/modules/media.api'
+import CastSlide from 'src/components/common/CastSlide'
 import CircularRate from 'src/components/common/CircularRate'
 import Container from 'src/components/common/Container'
 import ImageHeader from 'src/components/common/ImageHeader'
 import uiConfigs from 'src/configs/ui.config'
+import { Favorite } from 'src/types/favorites.type'
+import { genre } from 'src/types/genres.type'
+import { movie } from 'src/types/movie.type'
+import useAuthStore from 'src/zustand/auth'
+import useAuthModalStore from 'src/zustand/authModal'
+import useGlobalLoadingStore from 'src/zustand/globalLoading'
 
 const MediaDetail = () => {
   const { mediaType, mediaId } = useParams()
+  const user = useAuthStore((state) => state.user)
+  const listFavorites = useAuthStore((state) => state.listFavorites)
+  const setAuthModalOpen = useAuthModalStore((state) => state.setAuthModalOpen)
+  const setGlobalLoading = useGlobalLoadingStore((state) => state.setGlobalLoading)
+  const removeFavorite = useAuthStore((state) => state.removeFavorite)
+  const addFavorite = useAuthStore((state) => state.addFavorite)
 
-  const { user, listFavorites } = useSelector((state) => state.user)
+  const [media, setMedia] = useState<movie | null>(null)
+  const [isFavorite, setIsFavorite] = useState<boolean>(false)
+  const [onRequest, setOnRequest] = useState<boolean>(false)
+  const [genres, setGenres] = useState<genre[]>([])
 
-  const [media, setMedia] = useState()
-  const [isFavorite, setIsFavorite] = useState(false)
-  const [onRequest, setOnRequest] = useState(false)
-  const [genres, setGenres] = useState([])
+  const videoRef = useRef<HTMLElement | null>(null)
 
-  const dispatch = useDispatch()
+  const { data: dataMediaDetail, isLoading: isLoadingMediaDetail } = useQuery({
+    queryKey: ['getMediaDetail', { mediaType, mediaId }],
+    queryFn: () => mediaApi.detail({ mediaId, mediaType }),
+    onSuccess: (res) => {
+      setGlobalLoading(false)
+      // console.log('MediaDetail', res.data)
+      setMedia(res.data)
+      setGenres(res.data.genres)
+      setIsFavorite(res.data.isFavorite)
+    },
+    onError: (err: any) => {
+      setGlobalLoading(false)
+      toast.dismiss()
+      toast.error(err.message)
+    }
+  })
 
-  const videoRef = useRef(null)
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    if (isLoadingMediaDetail) {
+      setGlobalLoading(true)
+    }
+  }, [isLoadingMediaDetail, setGlobalLoading])
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0)
-  //   const getMedia = async () => {
-  //     dispatch(setGlobalLoading(true))
-  //     const { response, err } = await mediaApi.getDetail({ mediaType, mediaId })
-  //     dispatch(setGlobalLoading(false))
+  const addFavoriteMutation = useMutation({
+    mutationFn: (body: Favorite) => favoriteApi.add(body),
+    onSuccess: (res) => {
+      // console.log('addFavoriteMutation', res.data)
+      addFavorite(res.data)
+      toast.dismiss()
+      toast.success('Add favorite success')
+      setIsFavorite(true)
+    },
+    onError: (err: any) => {
+      toast.dismiss()
+      toast.error(err.message)
+    }
+  })
 
-  //     if (response) {
-  //       setMedia(response)
-  //       setIsFavorite(response.isFavorite)
-  //       setGenres(response.genres.splice(0, 2))
-  //     }
+  const removeFavoriteMutation = useMutation({
+    mutationFn: (favoriteId: string) => favoriteApi.remove(favoriteId),
+    onSuccess: (res) => {
+      // console.log('removeFavoriteMutation', res.data)
+      setIsFavorite(false)
+      setOnRequest(false)
+      toast.dismiss()
+      toast.success('Remove favorite success')
+    },
+    onError: (err: any) => {
+      toast.dismiss()
+      toast.error(err.message)
+    }
+  })
 
-  //     if (err) toast.error(err.message)
-  //   }
+  const onFavoriteClick = async () => {
+    if (!user) return setAuthModalOpen(true)
 
-  //   getMedia()
-  // }, [mediaType, mediaId, dispatch])
+    if (onRequest) return
 
-  // const onFavoriteClick = async () => {
-  //   if (!user) return dispatch(setAuthModalOpen(true))
+    if (isFavorite) {
+      onRemoveFavorite()
+      return
+    }
 
-  //   if (onRequest) return
+    setOnRequest(true)
 
-  //   if (isFavorite) {
-  //     onRemoveFavorite()
-  //     return
-  //   }
+    if (media) {
+      const body = {
+        mediaId: String(media.id),
+        mediaTitle: media.title || media.name,
+        mediaType: mediaType as string,
+        mediaPoster: media.poster_path,
+        mediaRate: media.vote_average
+      }
 
-  //   setOnRequest(true)
+      addFavoriteMutation.mutate(body)
 
-  //   const body = {
-  //     mediaId: media.id,
-  //     mediaTitle: media.title || media.name,
-  //     mediaType: mediaType,
-  //     mediaPoster: media.poster_path,
-  //     mediaRate: media.vote_average
-  //   }
+      setOnRequest(false)
+    }
+  }
 
-  //   const { response, err } = await favoriteApi.add(body)
+  const onRemoveFavorite = async () => {
+    if (onRequest) return
+    setOnRequest(true)
+    const favorite = listFavorites.find((e) => e.mediaId.toString() === (mediaId as string)?.toString())
 
-  //   setOnRequest(false)
+    removeFavoriteMutation.mutate((favorite as Favorite)?.id as string)
 
-  //   if (err) toast.error(err.message)
-  //   if (response) {
-  //     dispatch(addFavorite(response))
-  //     setIsFavorite(true)
-  //     toast.success('Add favorite success')
-  //   }
-  // }
-
-  // const onRemoveFavorite = async () => {
-  //   if (onRequest) return
-  //   setOnRequest(true)
-
-  //   const favorite = listFavorites.find((e) => e.mediaId.toString() === media.id.toString())
-
-  //   const { response, err } = await favoriteApi.remove({ favoriteId: favorite.id })
-
-  //   setOnRequest(false)
-
-  //   if (err) toast.error(err.message)
-  //   if (response) {
-  //     dispatch(removeFavorite(favorite))
-  //     setIsFavorite(false)
-  //     toast.success('Remove favorite success')
-  //   }
-  // }
+    removeFavoriteMutation.isSuccess && removeFavorite(favorite as Favorite)
+  }
 
   return media ? (
     <>
       <ImageHeader imgPath={tmdbConfigs.backdropPath(media.backdrop_path || media.poster_path)} />
+
       <Box
         sx={{
           color: 'primary.contrastText',
@@ -195,7 +230,7 @@ const MediaDetail = () => {
                     sx={{ width: 'max-content' }}
                     size='large'
                     startIcon={<PlayArrowIcon />}
-                    onClick={() => videoRef.current.scrollIntoView()}
+                    onClick={() => (videoRef?.current as HTMLVideoElement).scrollIntoView()}
                   >
                     watch now
                   </Button>
@@ -203,9 +238,9 @@ const MediaDetail = () => {
                 {/* buttons */}
 
                 {/* cast */}
-                {/* <Container header='Cast'>
+                <Container header='Cast'>
                   <CastSlide casts={media.credits.cast} />
-                </Container> */}
+                </Container>
                 {/* cast */}
               </Stack>
             </Box>
