@@ -38,6 +38,7 @@ const MediaDetail = () => {
   const [genres, setGenres] = useState<genre[]>([])
 
   const videoRef = useRef<HTMLElement | null>(null)
+  const favorite = listFavorites.find((e) => e.mediaId.toString() === (mediaId as string)?.toString())
 
   const { data: dataMediaDetail, isLoading: isLoadingMediaDetail } = useQuery({
     queryKey: ['getMediaDetail', { mediaType, mediaId }],
@@ -82,6 +83,7 @@ const MediaDetail = () => {
     mutationFn: (favoriteId: string) => favoriteApi.remove(favoriteId),
     onSuccess: (res) => {
       // console.log('removeFavoriteMutation', res.data)
+      removeFavorite(favorite as Favorite)
       setIsFavorite(false)
       setOnRequest(false)
       toast.dismiss()
@@ -123,11 +125,8 @@ const MediaDetail = () => {
   const onRemoveFavorite = async () => {
     if (onRequest) return
     setOnRequest(true)
-    const favorite = listFavorites.find((e) => e.mediaId.toString() === (mediaId as string)?.toString())
 
     removeFavoriteMutation.mutate((favorite as Favorite)?.id as string)
-
-    removeFavoriteMutation.isSuccess && removeFavorite(favorite as Favorite)
   }
 
   return media ? (
