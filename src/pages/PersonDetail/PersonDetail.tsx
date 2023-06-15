@@ -21,7 +21,7 @@ const PersonDetail = () => {
     queryKey: ['personDetail', { personId }],
     queryFn: () => personApi.detail(personId as string),
     onSuccess: (res) => {
-      console.log(res.data)
+      // console.log(res.data)
       setPerson(res.data)
       setGlobalLoading(false)
     },

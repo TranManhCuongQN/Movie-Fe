@@ -1,4 +1,4 @@
-import { Modal } from '@mui/base'
+import { Modal } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import useAuthModalStore from 'src/zustand/authModal'

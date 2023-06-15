@@ -13,7 +13,7 @@ const MainLayout = () => {
   const user = useAuthStore((state) => state.user)
 
   const { data } = useQuery({
-    queryKey: ['favorite'],
+    queryKey: ['favoriteList'],
     queryFn: () => favoriteApi.getList(),
     onSuccess: (res) => {
       // console.log(res.data)

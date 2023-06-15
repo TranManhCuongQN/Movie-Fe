@@ -28,7 +28,15 @@ const userApi = {
     const response = await axiosClient.get(userEndpoints.getInfo)
     return response
   },
-  passwordUpdate: async ({ password, newPassword, confirmNewPassword }: User) => {
+  passwordUpdate: async ({
+    password,
+    newPassword,
+    confirmNewPassword
+  }: {
+    password: string
+    newPassword: string
+    confirmNewPassword: string
+  }) => {
     const response = await axiosClient.put(userEndpoints.passwordUpdate, {
       password,
       newPassword,

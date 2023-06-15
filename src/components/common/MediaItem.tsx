@@ -10,8 +10,9 @@ import { routesURL } from 'src/routes/routes'
 import uiConfigs from 'src/configs/ui.config'
 import { favoriteUtils } from 'src/utils/utils'
 import useAuthStore from 'src/zustand/auth'
+import { Favorite } from 'src/types/favorites.type'
 
-const MediaItem = ({ media, mediaType }: { media: movie; mediaType: string }) => {
+const MediaItem = ({ media, mediaType }: { media: Favorite; mediaType: string }) => {
   const listFavorites = useAuthStore((state) => state.listFavorites)
   const [title, setTitle] = useState('')
   const [posterPath, setPosterPath] = useState('')
@@ -22,13 +23,18 @@ const MediaItem = ({ media, mediaType }: { media: movie; mediaType: string }) =>
     setTitle(media.title || media.name || media.mediaTitle)
 
     setPosterPath(
-      tmdbConfigs.posterPath(media.poster_path || media.backdrop_path || media.mediaPoster || media.profile_path)
+      tmdbConfigs.posterPath(
+        (media.poster_path as string) ||
+          (media.backdrop_path as string) ||
+          (media.mediaPoster as string) ||
+          (media.profile_path as string)
+      )
     )
 
     if (mediaType === tmdbConfigs.mediaType.movie) {
-      setReleaseDate(media.release_date && media.release_date.split('-')[0])
+      setReleaseDate((media.release_date as string) && (media.release_date as string).split('-')[0])
     } else {
-      setReleaseDate(media.first_air_date && media.first_air_date.split('-')[0])
+      setReleaseDate((media.first_air_date as string) && (media.first_air_date as string).split('-')[0])
     }
 
     setRate(media.vote_average || media.mediaRate)
@@ -38,7 +44,7 @@ const MediaItem = ({ media, mediaType }: { media: movie; mediaType: string }) =>
     <Link
       to={
         mediaType !== 'people'
-          ? routesURL.mediaDetail(mediaType, media.id)
+          ? routesURL.mediaDetail(mediaType, String(media.id))
           : routesURL.person(String(media.id) as string)
       }
     >

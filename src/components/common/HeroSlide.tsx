@@ -186,7 +186,7 @@ const HeroSlide = ({ mediaCategory, mediaType }: HeroSlideProps) => {
                     size='large'
                     startIcon={<PlayArrowIcon />}
                     component={Link}
-                    to={routesURL.mediaDetail(mediaType, movie.id)}
+                    to={routesURL.mediaDetail(mediaType, String(movie.id))}
                     sx={{ width: 'max-content' }}
                   >
                     watch now

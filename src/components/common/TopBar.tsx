@@ -38,7 +38,7 @@ const TopBar = () => {
   const setAuthModalOpen = useAuthModalStore((state) => state.setAuthModalOpen)
   const setThemeMode = useThemeModeStore((state) => state.setThemeMode)
 
-  const [sidebarOpen, setSidebarOpen] = React.useState(false)
+  const [sidebarOpen, setSidebarOpen] = React.useState<boolean>(false)
 
   const onSwithTheme = () => {
     const theme = themeMode === themeModes.dark ? themeModes.light : themeModes.dark

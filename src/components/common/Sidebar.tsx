@@ -60,7 +60,7 @@ const Sidebar = ({ open, toggleSidebar }: SidebarProps) => {
           </ListItemButton>
         ))}
 
-        {user && (
+        {/* {user && (
           <>
             <Typography variant='h6' marginBottom='20px'>
               PERSONAL
@@ -85,7 +85,7 @@ const Sidebar = ({ open, toggleSidebar }: SidebarProps) => {
               </ListItemButton>
             ))}
           </>
-        )}
+        )} */}
         <Typography variant='h6' marginBottom='20px'>
           THEME
         </Typography>
