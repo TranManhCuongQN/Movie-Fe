@@ -41,4 +41,5 @@ export interface movie {
   reviews: Review[]
   recommend: movie[]
   genre_ids: number[]
+  media_type: string
 }

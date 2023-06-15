@@ -15,9 +15,9 @@ const main = [
   },
   {
     display: 'movies',
-    path: '/movies',
+    path: '/movie',
     icon: <SlideshowOutlinedIcon />,
-    state: 'movies'
+    state: 'movie'
   },
   {
     display: 'tv series',
@@ -50,9 +50,10 @@ const user = [
     display: 'password update',
     path: '/password-update',
     icon: <LockResetOutlinedIcon />,
-    state: 'password-update'
+    state: 'password.update'
   }
 ]
 
 const menuConfigs = { main, user }
+
 export default menuConfigs

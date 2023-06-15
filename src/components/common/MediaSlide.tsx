@@ -11,7 +11,7 @@ import { movie } from 'src/types/movie.type'
 const MediaSlide = ({ mediaType, mediaCategory }: { mediaType: string; mediaCategory: string }) => {
   const [medias, setMedias] = useState<movie[]>([])
 
-  const { data: dataMedias } = useQuery({
+  const { data: dataMediasHome } = useQuery({
     queryKey: ['getMedias', { mediaType, mediaCategory }],
     queryFn: () => mediaApi.list({ mediaType, mediaCategory, page: 1 }),
     onSuccess: (res) => {
