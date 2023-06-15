@@ -12,7 +12,7 @@ import { favoriteUtils } from 'src/utils/utils'
 import useAuthStore from 'src/zustand/auth'
 import { Favorite } from 'src/types/favorites.type'
 
-const MediaItem = ({ media, mediaType }: { media: Favorite; mediaType: string }) => {
+const MediaItem = ({ media, mediaType }: { media: Favorite | movie; mediaType: string }) => {
   const listFavorites = useAuthStore((state) => state.listFavorites)
   const [title, setTitle] = useState('')
   const [posterPath, setPosterPath] = useState('')
