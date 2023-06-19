@@ -9,12 +9,12 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import userApi from 'src/api/modules/user.api'
 import { useMutation } from 'react-query'
-import { User } from 'src/types/user.type'
 import { toast } from 'react-toastify'
 import InputField from 'src/components/common/InputField'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import useAuthModalStore from 'src/zustand/authModal'
+import { Helmet } from 'react-helmet-async'
 
 interface FormData {
   password: string
@@ -69,89 +69,96 @@ const PasswordUpdate = () => {
   })
 
   return (
-    <Box sx={{ ...uiConfigs.style.mainContent }}>
-      <Container header='update password'>
-        <Box component='form' maxWidth='400px' onSubmit={onSubmit}>
-          {/* password */}
-          <InputField
-            name='password'
-            label='Password'
-            control={control}
-            color='success'
-            placeholder='Password'
-            type={showPassword ? 'text' : 'password'}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position='end'>
-                  <IconButton
-                    aria-label='toggle password visibility'
-                    onClick={() => setShowPassword(!showPassword)}
-                    edge='end'
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-          />
+    <>
+      <Helmet>
+        <title>Password Update Page</title>
+        <meta name='description' content='Password Update Page - Movie' />
+      </Helmet>
 
-          <InputField
-            name='newPassword'
-            label='New password'
-            control={control}
-            color='success'
-            placeholder='New password'
-            type={showNewPassword ? 'text' : 'password'}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position='end'>
-                  <IconButton
-                    aria-label='toggle password visibility'
-                    onClick={() => setShowNewPassword(!showNewPassword)}
-                    edge='end'
-                  >
-                    {showNewPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-          />
+      <Box sx={{ ...uiConfigs.style.mainContent }}>
+        <Container header='update password'>
+          <Box component='form' maxWidth='400px' onSubmit={onSubmit}>
+            {/* password */}
+            <InputField
+              name='password'
+              label='Password'
+              control={control}
+              color='success'
+              placeholder='Password'
+              type={showPassword ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      aria-label='toggle password visibility'
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge='end'
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
 
-          <InputField
-            name='confirmNewPassword'
-            label='Confirm new password'
-            control={control}
-            color='success'
-            placeholder='Confirm new password'
-            type={showConfirmNewPassword ? 'text' : 'password'}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position='end'>
-                  <IconButton
-                    aria-label='toggle password visibility'
-                    onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
-                    edge='end'
-                  >
-                    {showConfirmNewPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-          />
-          <Stack spacing={2}>
-            <LoadingButton
-              type='submit'
-              variant='contained'
-              fullWidth
-              sx={{ marginTop: 4 }}
-              loading={updatePasswordMutation.isLoading}
-            >
-              update password
-            </LoadingButton>
-          </Stack>
-        </Box>
-      </Container>
-    </Box>
+            <InputField
+              name='newPassword'
+              label='New password'
+              control={control}
+              color='success'
+              placeholder='New password'
+              type={showNewPassword ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      aria-label='toggle password visibility'
+                      onClick={() => setShowNewPassword(!showNewPassword)}
+                      edge='end'
+                    >
+                      {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+
+            <InputField
+              name='confirmNewPassword'
+              label='Confirm new password'
+              control={control}
+              color='success'
+              placeholder='Confirm new password'
+              type={showConfirmNewPassword ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      aria-label='toggle password visibility'
+                      onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
+                      edge='end'
+                    >
+                      {showConfirmNewPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+            <Stack spacing={2}>
+              <LoadingButton
+                type='submit'
+                variant='contained'
+                fullWidth
+                sx={{ marginTop: 4 }}
+                loading={updatePasswordMutation.isLoading}
+              >
+                update password
+              </LoadingButton>
+            </Stack>
+          </Box>
+        </Container>
+      </Box>
+    </>
   )
 }
 

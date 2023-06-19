@@ -1,5 +1,6 @@
 import { Box } from '@mui/system'
 import * as React from 'react'
+import { Helmet } from 'react-helmet-async'
 import tmdbConfigs from 'src/api/configs/tmdb.configs'
 import Container from 'src/components/common/Container'
 import HeroSlide from 'src/components/common/HeroSlide'
@@ -9,6 +10,11 @@ import uiConfigs from 'src/configs/ui.config'
 export function HomePage() {
   return (
     <>
+      <Helmet>
+        <title>Home Page</title>
+        <meta name='description' content='Home Page - Movie' />
+      </Helmet>
+
       <HeroSlide mediaType={tmdbConfigs.mediaType.movie} mediaCategory={tmdbConfigs.mediaCategory.popular} />
 
       <Box marginTop='-4rem' sx={{ ...uiConfigs.style.mainContent }}>

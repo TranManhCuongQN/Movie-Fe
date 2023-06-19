@@ -4,7 +4,7 @@ import App from './App'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import 'react-toastify/dist/ReactToastify.css'
-
+import { HelmetProvider } from 'react-helmet-async'
 import { BrowserRouter } from 'react-router-dom'
 
 import '@fontsource/roboto/300.css'
@@ -22,11 +22,13 @@ const queryClient = new QueryClient({
 })
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter>
-    <QueryClientProvider client={queryClient}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </HelmetProvider>
   </BrowserRouter>
 )

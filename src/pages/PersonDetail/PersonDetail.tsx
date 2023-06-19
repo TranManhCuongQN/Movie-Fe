@@ -11,6 +11,7 @@ import PersonMediaGrid from 'src/components/common/PersonMediaGrid'
 import uiConfigs from 'src/configs/ui.config'
 import { Person } from 'src/types/person.type'
 import useGlobalLoadingStore from 'src/zustand/globalLoading'
+import { Helmet } from 'react-helmet-async'
 
 const PersonDetail = () => {
   const { personId } = useParams()
@@ -40,6 +41,11 @@ const PersonDetail = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Person Detail Page</title>
+        <meta name='description' content='Person Detail Page - Movie' />
+      </Helmet>
+
       <Toolbar />
       {person && (
         <>

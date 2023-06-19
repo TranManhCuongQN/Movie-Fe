@@ -8,6 +8,7 @@ import { movie } from 'src/types/movie.type'
 import { toast } from 'react-toastify'
 import uiConfigs from 'src/configs/ui.config'
 import MediaGrid from 'src/components/common/MediaGrid'
+import { Helmet } from 'react-helmet-async'
 
 const mediaTypes = ['movie', 'tv', 'people']
 let timer: any
@@ -75,6 +76,11 @@ const MediaSearch = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Search Page</title>
+        <meta name='description' content='Search Page - Movie' />
+      </Helmet>
+
       <Toolbar />
       <Box sx={{ ...uiConfigs.style.mainContent }}>
         <Stack spacing={2}>

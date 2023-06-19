@@ -16,6 +16,7 @@ import HeroSlide from 'src/components/common/HeroSlide'
 import uiConfigs from 'src/configs/ui.config'
 import tmdbConfigs from 'src/api/configs/tmdb.configs'
 import MediaGrid from 'src/components/common/MediaGrid'
+import { Helmet } from 'react-helmet-async'
 
 const MediaList = () => {
   const { mediaType } = useParams()
@@ -96,6 +97,17 @@ const MediaList = () => {
 
   return (
     <>
+      <Helmet>
+        <title
+          style={{
+            textTransform: 'capitalize'
+          }}
+        >
+          {mediaType} Page
+        </title>
+        <meta name='description' content={mediaType + 'Page'} />
+      </Helmet>
+
       <HeroSlide mediaType={mediaType as string} mediaCategory={mediaCategories[currCategory]} />
       <Box sx={{ ...uiConfigs.style.mainContent }}>
         <Stack

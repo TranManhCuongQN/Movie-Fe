@@ -13,9 +13,9 @@ import uiConfigs from 'src/configs/ui.config'
 import { Grid } from '@mui/material'
 import { Button } from '@mui/base'
 import Container from 'src/components/common/Container'
+import { Helmet } from 'react-helmet-async'
 
 const FavoriteItem = ({ media, onRemoved }: { media: Favorite; onRemoved: (favoriteId: string) => void }) => {
-  const [onRequest, setOnRequest] = useState(false)
   const removeFavorite = useAuthStore((state) => state.removeFavorite)
 
   const removeFavoriteMutation = useMutation({
@@ -38,6 +38,11 @@ const FavoriteItem = ({ media, onRemoved }: { media: Favorite; onRemoved: (favor
 
   return (
     <>
+      <Helmet>
+        <title>Favorite List Page</title>
+        <meta name='description' content='Favorite List Page - Movie' />
+      </Helmet>
+
       <MediaItem media={media} mediaType={media.mediaType} />
       <LoadingButton
         fullWidth
@@ -45,7 +50,7 @@ const FavoriteItem = ({ media, onRemoved }: { media: Favorite; onRemoved: (favor
         sx={{ marginTop: 2 }}
         startIcon={<DeleteIcon />}
         loadingPosition='start'
-        loading={onRequest}
+        loading={removeFavoriteMutation.isLoading}
         onClick={onRemove}
       >
         remove

@@ -13,6 +13,7 @@ import { routesURL } from 'src/routes/routes'
 import uiConfigs from 'src/configs/ui.config'
 import tmdbConfigs from 'src/api/configs/tmdb.configs'
 import Container from 'src/components/common/Container'
+import { Helmet } from 'react-helmet-async'
 
 const ReviewItem = ({ review, onRemoved }: { review: Review; onRemoved: (reviewId: string) => void }) => {
   const removeReviewMutation = useMutation({
@@ -140,23 +141,30 @@ const ReviewList = () => {
   }
 
   return (
-    <Box sx={{ ...uiConfigs.style.mainContent }}>
-      <Container header={`Your reviews (${count})`}>
-        <Stack spacing={2}>
-          {filteredReviews.map((item) => (
-            <Box key={item.id}>
-              <ReviewItem review={item} onRemoved={onRemoved} />
-              <Divider
-                sx={{
-                  display: { xs: 'block', md: 'none' }
-                }}
-              />
-            </Box>
-          ))}
-          {filteredReviews.length < reviews.length && <Button onClick={onLoadMore}>load more</Button>}
-        </Stack>
-      </Container>
-    </Box>
+    <>
+      <Helmet>
+        <title>Review List Page</title>
+        <meta name='description' content='Review List Page - Movie' />
+      </Helmet>
+
+      <Box sx={{ ...uiConfigs.style.mainContent }}>
+        <Container header={`Your reviews (${count})`}>
+          <Stack spacing={2}>
+            {filteredReviews.map((item) => (
+              <Box key={item.id}>
+                <ReviewItem review={item} onRemoved={onRemoved} />
+                <Divider
+                  sx={{
+                    display: { xs: 'block', md: 'none' }
+                  }}
+                />
+              </Box>
+            ))}
+            {filteredReviews.length < reviews.length && <Button onClick={onLoadMore}>load more</Button>}
+          </Stack>
+        </Container>
+      </Box>
+    </>
   )
 }
 

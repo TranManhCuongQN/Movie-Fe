@@ -28,6 +28,7 @@ import { movie } from 'src/types/movie.type'
 import useAuthStore from 'src/zustand/auth'
 import useAuthModalStore from 'src/zustand/authModal'
 import useGlobalLoadingStore from 'src/zustand/globalLoading'
+import { Helmet } from 'react-helmet-async'
 
 const MediaDetail = () => {
   const { mediaType, mediaId } = useParams()
@@ -141,6 +142,11 @@ const MediaDetail = () => {
 
   return media ? (
     <>
+      <Helmet>
+        <title>Movie Detail Page</title>
+        <meta name='description' content='Movie Detail Page - Movie' />
+      </Helmet>
+
       <ImageHeader imgPath={tmdbConfigs.backdropPath(media.backdrop_path || media.poster_path)} />
 
       <Box
